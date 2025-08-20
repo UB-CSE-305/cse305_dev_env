@@ -1,0 +1,35 @@
+name: Build LaTeX Manual
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - latex-manual
+    paths:
+      - "manuals/OCaml_environment_setup.tex"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: latex-manual
+
+      - name: Set up TeX Live
+        uses: xu-cheng/latex-action@v4
+        with:
+          root_file: manuals/OCaml_environment_setup.tex
+          latexmk_use_lualatex: true
+        env:
+          TEXINPUTS: ".:manuals/images//:"
+
+      - name: Upload PDF to latest release
+        run: |
+          LATEST_TAG=$(gh release list --limit 1 --json tagName --jq '.[0].tagName')
+          echo "Latest release tag: $LATEST_TAG"
+          gh release upload "$LATEST_TAG" OCaml_environment_setup.pdf --clobber
+        env:
+          GH_TOKEN: ${{ secrets.CSE305_ACTION_PAT }}
