@@ -136,11 +136,23 @@ The \texttt{-t} flag in this instance refers to tagging the image with the name 
 
 To create a container from the image you just built:
 \begin{lstlisting}
-$ docker run --name 305container --it 305image
+$ docker run --name 305container -it \
+  --mount type=bind,source="$(pwd)"/local_workspace,target=/home/cse305/workspace \
+  --user $(id -u):$(id -g) 305image
 \end{lstlisting}
 In this command, we are naming the container \texttt{305container}. The flags \texttt{-it} tell docker to run the container
-with an interactive terminal. \texttt{305image} being appended after the flags tells docker which image we want to create the container from.
+with an interactive terminal.
+
+\texttt{--mount} allows you to mount our \texttt{local\_workspace} folder into the container
+at \texttt{/home/cse305/workspace}, and \texttt{--user \$(id -u):\$(id -g)} sets the user and group ID using
+the current user's IDs to avoid permission issues. This setup allows most of the compilation and development work to happen within the Docker container,
+while any code saved in the workspace folder inside the container actually resides on the host machine.
+As a result, the code persists independently of the container lifecycle and will not be lost when the container is removed.
+Therefore, the workspace folder \texttt{/home/cse305/workspace} is the primary location for you to develop your code.
+
+\texttt{305image} being appended after the flags tells docker which image we want to create the container from.
 After running that, you should shortly see something resembling a Linux command prompt.
+
 
 If you have created a container before (and have not deleted it), you can run it with the following command:
 \begin{lstlisting}
@@ -157,15 +169,6 @@ To list all containers you have created:
 $ docker ps -a
 \end{lstlisting}
 \texttt{-a} flag here shows all containers, including those that are stopped.
-
-The workspace from now on will be the directory \texttt{/home/cse305}. To copy the files and directories from the container to your local machine, use the command
-\begin{lstlisting}
-$ docker cp 305container:/home/cse305/<project_path> <local_path>
-\end{lstlisting}
-Copying files and directories to the container works the reverse of the previous example:
-\begin{lstlisting}
-$ docker cp <local_path> 305container:/home/cse305/<project_path>
-\end{lstlisting}
 
 Pre-installed Emacs development environment provides out-of-the-box
 Language Server Protocol (LSP) support and auto code formatting.
@@ -193,8 +196,9 @@ in order to access the full functionality if you are using Visual Studio Code.
 
 We use the Dev Container plugin to connect the \texttt{/home/cse305/workspace} folder inside the Docker container with the \texttt{local\_workspace} in our repository.
 This setup allows most of the compilation and development work to happen within the Docker container,
-while any code saved in the workflow folder inside the container actually resides on the host machine.
+while any code saved in the workspace folder inside the container actually resides on the host machine.
 As a result, the code persists independently of the container lifecycle and will not be lost when the container is removed.
+Therefore, the workspace folder \texttt{/home/cse305/workspace} is the primary location for you to develop your code.
 
 After installing the plugin, open the repository folder you just cloned in VS Code\@.
 Then, open the VS Code Command Palette (\keys{\ctrl + p} or \keys{\cmd + p}) and

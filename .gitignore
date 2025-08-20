@@ -1,4 +1,15 @@
 *.pdf
+
 .DS_Store
 .vscode/
 _build/
+
+# LaTeX intermediate files
+*.synctex.gz
+*.aux
+*.fls
+*.log
+*.fdb_latexmk
+*.pdf
+*.out
+*.toc
