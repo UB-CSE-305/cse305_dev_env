@@ -1,6 +1,6 @@
 {
-    "name": "CSE305 Intro to Programming Languages Build Environment",
-    "image": "ghcr.io/UB-CSE305.org/305image:latest",
+    "name": "CSE305 Intro to Programming Languages Docker Environment",
+    "image": "ghcr.io/ub-cse-305/305image:latest",
     "runArgs": [
         "--name=305container"
     ],
