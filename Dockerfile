@@ -18,7 +18,7 @@ RUN apt-get update \
     opam bubblewrap rsync unzip \
     emacs-nox clangd ssh-client sudo
 
-# Delete the unused Ubuntu user ‘ubuntu’ introduced since 24.04
+# Delete the unused user ‘ubuntu’ introduced since Ubuntu 24.04
 RUN userdel -r ubuntu \
     && groupadd --gid ${USER_GID} ${USER_NAME} \
     && useradd -s /bin/bash --uid ${USER_UID} --gid ${USER_GID} -m ${USER_NAME} \
@@ -37,8 +37,8 @@ RUN opam init --bare -ay \
     && echo "version = `ocamlformat --version`" >> .ocamlformat
 
 # Configuration for Emacs
-COPY --chown=${USER_NAME}:${USER_NAME} emacs /home/${USER_NAME}/.config/emacs
-RUN emacs --batch -l .config/emacs/init.el
+RUN git clone --single-branch -b emacs-config https://github.com/UB-CSE-305/cse305_dev_env.git .config \
+    && emacs --batch -l .config/emacs/init.el
 
 # Check installation
 RUN which opam \

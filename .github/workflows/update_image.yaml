@@ -28,17 +28,32 @@ jobs:
           PKG="305image"
           OWNER="ub-cse-305"
 
-          LAST_TAG=$(gh api /orgs/$OWNER/packages/container/$PKG/versions \
-            --jq '.[0].metadata.container.tags[1]' || echo "0.0.0")
+          ALL_TAGS=$(gh api /orgs/$OWNER/packages/container/$PKG/versions \
+            -H "Accept: application/vnd.github+json" \
+            | jq -r '
+                .[]
+                | .metadata.container.tags[]?
+                | select(test("^[0-9]+\\.[0-9]+\\.[0-9]+$"))
+            ')
 
-          echo "Last tag: $LAST_TAG"
+          echo "All semantic version tags found:"
+          echo "$ALL_TAGS"
 
-          IFS='.' read -r MAJOR MINOR PATCH <<< "${LAST_TAG#v}"
+          LAST_TAG=$(echo "$ALL_TAGS" | sort -V | tail -n1)
+
+          echo "Latest tag: $LAST_TAG"
+
+          if [[ -z "$LAST_TAG" ]]; then
+            echo "No semantic version tags found, fallback to 0.0.0"
+            LAST_TAG="0.0.0"
+          fi
+
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$LAST_TAG"
           PATCH=$((PATCH+1))
           VERSION="$MAJOR.$MINOR.$PATCH"
 
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "Generated version: $VERSION"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
 
   build:
     runs-on: ubuntu-latest
