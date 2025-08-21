@@ -1,0 +1,18 @@
+{
+    "name": "CSE305 Intro to Programming Languages Build Environment",
+    "image": "ghcr.io/ub-cse-305/305image:latest",
+    "runArgs": [
+        "--name=305container"
+    ],
+    "remoteUser": "cse305",
+    "workspaceMount": "source=${localWorkspaceFolder}/local_workspace,target=/home/cse305/workspace,type=bind",
+    "workspaceFolder": "/home/cse305/workspace",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "github.vscode-pull-request-github",
+                "ocamllabs.ocaml-platform"
+            ]
+        }
+    }
+}
