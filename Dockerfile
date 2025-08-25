@@ -4,6 +4,7 @@ FROM ${BASE_IMAGE}
 LABEL org.opencontainers.image.authors="Vincent Chan <vichan39@buffalo.edu>"
 LABEL org.opencontainers.image.title="CSE305 Intro to Programming Languages Course Image"
 LABEL org.opencontainers.image.description="Provides Opam, OCaml, and Utop with a preconfigured Emacs development environment"
+LABEL org.opencontainers.image.source="https://github.com/UB-CSE-305/cse305_dev_env"
 
 ARG OCAML_VERSION=4.14.2
 ARG USER_NAME=cse305
