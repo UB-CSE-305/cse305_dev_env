@@ -110,7 +110,7 @@ We recommend using Visual Studio Code (VS Code) or Emacs as the text editor for 
 Docker will prompt you several times to log in to an account, you \textbf{do not need a docker account} to use Docker
 Desktop, or any of its features for this course.
 
-Note that the Docker engine, and Docker Desktop \textbf{are not the same}, and we are supporting Docker Desktop.
+Note that the Docker engine, and Docker Desktop \textbf{are not the same}, and Docker Desktop is the only option we support.
 You should go through \href{https://docs.docker.com/desktop/setup/install/windows-install/}{the documentation},
 read through it first, and then follow the instructions to install Docker Desktop. You should also read through
 \href{https://docs.docker.com/desktop/setup/install/windows-permission-requirements/}{this documentation}
@@ -119,9 +119,11 @@ In general, if you are unsure about a command you are running, you can find docu
 pages, i.e. \texttt{man docker-build} or \texttt{man docker-run}, etc.
 
 \subsection{Build the container from \texttt{cse305\_dev\_env} repository}
-First, you need to clone the \href{https://github.com/UB-CSE-305/cse305_dev_env}{course repository}.
 A Docker image is the standard for which Docker containers are built from. You should only have to build
 this image once, and use it to create containers to develop within.
+
+You need to clone the \href{https://github.com/UB-CSE-305/cse305_dev_env}{course repository} first.
+Depending on which text editor you want to use, follow the corresponding instructions below.
 
 \subsubsection{Using Emacs in terminal}
 You need to build and run the Docker image from the terminal.
