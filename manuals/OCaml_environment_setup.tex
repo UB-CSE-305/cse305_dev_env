@@ -64,6 +64,7 @@ $ sudo apt install -y opam
 When the installation is complete, run the following command in your terminal:
 \begin{lstlisting}
 $ opam init -a
+$ opam switch create cse305_4.14.2 ocaml-base-compiler.4.14.2 && opam switch cse305_4.14.2
 \end{lstlisting}
 
 When the installation is complete, restart your machine and open a new terminal.
@@ -84,7 +85,6 @@ You may need to restart your machine to make sure the system is reading the upda
 
 If \texttt{which ocaml} prompt the path successfully, in your terminal run:
 \begin{lstlisting}
-$ opam switch create cse305_4.14.2 ocaml-base-compiler.4.14.2 && opam switch cse305_4.14.2
 $ opam install -y ocaml-lsp-server ocamlformat utop
 \end{lstlisting}
 
