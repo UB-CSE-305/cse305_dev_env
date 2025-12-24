@@ -32,7 +32,7 @@ WORKDIR /home/${USER_NAME}
 ENV PATH=/home/${USER_NAME}/.opam/${USER_NAME}_${OCAML_VERSION}/bin:$PATH
 RUN opam init --bare -ay \
     && opam switch create ${USER_NAME}_${OCAML_VERSION} ocaml-base-compiler.${OCAML_VERSION} \
-    && opam install -y merlin ocaml-lsp-server ocamlformat utop \
+    && opam install -y merlin ocaml-lsp-server ocamlformat utop ounit2\
     && chmod +x .opam/opam-init/*.sh \
     && echo 'eval $(opam env)' >> .bashrc \
     && echo "version = `ocamlformat --version`" >> .ocamlformat

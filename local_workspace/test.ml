@@ -1,9 +1,12 @@
 let print_list print_elem lst =
   let rec aux = function
+    (*If lst is empty*)
     | [] -> print_endline "]"
-    | [ x ] ->
+    (*If lst has exactly one element*)
+    | x :: [] ->
         print_elem x;
         print_endline "]"
+    (*If lst has more than one element*)
     | x :: xs ->
         print_elem x;
         print_string "; ";
