@@ -20,7 +20,7 @@
 
 \title{OCaml Environment Setup}
 \author{CSE 305 Introduction to Programming Languages}
-\date{Fall 2025}
+\date{Spring 2026}
 
 \begin{document}
 
@@ -45,6 +45,8 @@ and Windows users should read Section~\ref{DockerSetup}.
 Homebrew is the most popular `unofficial' package manager for macOS\@.
 If you don't have it installed already, you should click on the \href{https://brew.sh/}{Homebrew website},
 copy the install script and run it in \texttt{Terminal.app} or any terminal emulator you have.
+
+Close and reopen your terminal after the installation is complete.
 
 \subsection{Install \texttt{opam}}
 For macOS / Linux users, open any terminal emulator you have,
@@ -88,14 +90,14 @@ If \texttt{which ocaml} prompt the path successfully, in your terminal run:
 $ opam install -y ocaml-lsp-server ocamlformat utop
 \end{lstlisting}
 
-\subsection{Setting up text editor}
+\subsection{Setting up text editor}\label{TextEditorSetup}
 You can use whatever editor you are comfortable with.
 However, we found VS Code to be the easiest editor to set up for use with OCaml.
 \href{https://marketplace.visualstudio.com/items?itemName=ocamllabs.ocaml-platform}{OCaml Platform} is an extension we recommend for syntax highlighting and code auto completion.
 The extension can be found in the VS Code Extension Store.
 
 For macOS/Linux users, choose `cse305\_4.14.2' when VS Code asks for sandbox configuration.
-This should enable syntax highlighting and autocomplete. Proceed to section~\ref{TestEnv} to test
+This should enable syntax highlighting and autocomplete. Proceed to Section~\ref{TestEnv} to test
 your environment.
 
 
@@ -106,7 +108,7 @@ so we provide a Docker image with all necessary tools,
 Emacs development environment is also pre-installed.
 We recommend using Visual Studio Code (VS Code) or Emacs as the text editor for this course.
 
-\subsection{Install Docker Desktop}
+\subsection{Install Docker Desktop}\label{InstallDocker}
 Docker will prompt you several times to log in to an account, you \textbf{do not need a docker account} to use Docker
 Desktop, or any of its features for this course.
 
@@ -118,14 +120,15 @@ if you have concerns about permissions on Windows.
 In general, if you are unsure about a command you are running, you can find documentation using the man
 pages, i.e. \texttt{man docker-build} or \texttt{man docker-run}, etc.
 
-\subsection{Build the container from \texttt{cse305\_dev\_env} repository}
+\subsection{Build the container from \texttt{cse305\_dev\_env} repository}\label{BuildContainer}
 A Docker image is the standard for which Docker containers are built from. You should only have to build
 this image once, and use it to create containers to develop within.
 
 You need to clone the \href{https://github.com/UB-CSE-305/cse305_dev_env}{course repository} first.
-Depending on which text editor you want to use, follow the corresponding instructions below.
+If you would like to use Emacs as your text editor, read Section~\ref{EmacsSetup},
+otherwise, if you would like to use VS Code, read Section~\ref{VSCodeSetup}.
 
-\subsubsection{Using Emacs in terminal}
+\subsubsection{Using Emacs in terminal}\label{EmacsSetup}
 You need to build and run the Docker image from the terminal.
 
 While being in the same directory as the repository, you can build the image with the following command in a
@@ -140,14 +143,14 @@ To create a container from the image you just built:
 \begin{lstlisting}
 $ docker run --name 305container -it \
   --mount type=bind,source="$(pwd)"/local_workspace,target=/home/cse305/workspace \
-  --user $(id -u):$(id -g) 305image
+  305image
 \end{lstlisting}
 In this command, we are naming the container \texttt{305container}. The flags \texttt{-it} tell docker to run the container
 with an interactive terminal.
 
 \texttt{--mount} allows you to mount our \texttt{local\_workspace} folder into the container
-at \texttt{/home/cse305/workspace}, and \texttt{--user \$(id -u):\$(id -g)} sets the user and group ID using
-the current user's IDs to avoid permission issues. This setup allows most of the compilation and development work to happen within the Docker container,
+at \texttt{/home/cse305/workspace}.
+This setup allows most of the compilation and development work to happen within the Docker container,
 while any code saved in the workspace folder inside the container actually resides on the host machine.
 As a result, the code persists independently of the container lifecycle and will not be lost when the container is removed.
 Therefore, the workspace folder \texttt{/home/cse305/workspace} is the primary location for you to develop your code.
@@ -189,9 +192,9 @@ Some other useful Emacs commands when writing OCaml in the container:
 
 To add your own Emacs configurations, you should edit the file \textbf{\texttt{/home/cse305/.config/emacs/user.el}}.
 
-Proceed to section~\ref{TestEnv} after setting up your preferred method.
+Proceed to Section~\ref{TestEnv} after setting up your preferred method.
 
-\subsubsection{Using VS Code with plugins}
+\subsubsection{Using VS Code with plugins}\label{VSCodeSetup}
 You need to install
 \href{https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers}{Dev Containers}
 in order to access the full functionality if you are using Visual Studio Code.
@@ -204,7 +207,7 @@ Therefore, the workspace folder \texttt{/home/cse305/workspace} is the primary l
 
 After installing the plugin, open the repository folder you just cloned in VS Code\@.
 Then, open the VS Code Command Palette (\keys{\ctrl + p} or \keys{\cmd + p}) and
-type \texttt{> Dev Container: Reopen in Container} to connect to your container.
+type ``\texttt{> Dev Container: Reopen in Container}'' to connect to your container.
 
 \begin{figure}[H]
   \centering
@@ -213,6 +216,31 @@ type \texttt{> Dev Container: Reopen in Container} to connect to your container.
 
 A new window will open and attach to the container. It will then pull and build the latest release image that matches your architecture and install the necessary extensions automatically.
 Depending on your internet connection and system performance, this process may take some time.
+
+To connect to a previously created container, open a new VS Code window,
+open the ``Containers'' tab on the left sidebar, find your container,
+right-click on it and select ``Start''.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.4\textwidth]{vscode_start_container.png}
+\end{figure}
+
+After the container is started, right-click on it again and select ``Attach Visual Studio Code'', a new window will open and attach to the container.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.4\textwidth]{vscode_attach_editor.png}
+\end{figure}
+
+The new window will open and attach to the container, but it may not open the workspace folder automatically.
+To open the workspace folder, click on ``Open Folder'' or go to \texttt{File > Open Folder$\ldots$}, then choose \texttt{/home/cse305/workspace} and click ``OK''. Workspace folder with pre-existing ``\texttt{test.ml}'' should open.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.4\textwidth]{vscode_open_workspace.png}
+  \includegraphics[width=0.5\textwidth]{vscode_click_ok.png}
+\end{figure}
+
 
 \newpage
 \section{Run your code}\label{CompileRun}
@@ -240,7 +268,7 @@ To exit \texttt{utop}:
   \centering
   \includegraphics[width=0.6\textwidth]{utop_run_code.png}
 \end{figure}
-Check out section~\ref{TestEnv} for a concrete example.
+Check out Section~\ref{TestEnv} for a concrete example.
 
 
 \newpage
@@ -276,9 +304,9 @@ When you write code with errors, \texttt{ocamllsp} will show static type errors 
 
 \newpage
 \section{Troubleshoot}\label{Troubleshoot}
-\textbf{Q}: I ran \texttt{which ocaml} and it said \texttt{ocaml: command not found!}
+\subsection{I ran \texttt{which ocaml} and it said \texttt{ocaml: command not found!}}
 
-\textbf{A}: If closing and reopening the terminal or restarting machine doesn't help,
+If closing and reopening the terminal or restarting machine doesn't help,
 run \texttt{opam env} in your terminal, normally it should look like this:
 \begin{lstlisting}
 [22:23:20] Vincent@ArchLinux ~ % opam env 
@@ -302,18 +330,25 @@ eval $(opam env)
 \end{lstlisting}
 After adding that line, close and reopen your terminal and try \texttt{which ocaml} again.
 
-\textbf{Q}: VSCode syntax highlighting and autocomplete not working
+\subsection{VSCode syntax highlighting and autocomplete not working}
 
-\textbf{A}: You need to install \texttt{ocaml-lsp-server} and \texttt{ocamlformat} by running:
+You need to install \texttt{ocaml-lsp-server} and \texttt{ocamlformat} by running:
 \begin{lstlisting}
 opam install -y ocaml-lsp-server ocamlformat
 \end{lstlisting}
 
-\textbf{Q}: I tried to build the Docker image, but it failed with an error.
+\subsection{I tried to build the Docker image, but it failed with an error.}
 
-\textbf{A}: Make sure you read the error message carefully.
+Make sure you read the error message carefully.
 It often provides clues about what went wrong.
 Please let us know if you are unable to resolve the issue.
+
+\subsection{Received an error ``\texttt{Cannot connect to the Docker daemon at docker.sock. Is the docker daemon running?}''/``\texttt{Docker error the docker daemon is not running}''}
+
+Make sure Docker Desktop is running before you try to run any Docker commands.
+
+\subsection{Docker Desktop shows an error ``\texttt{WSL needs updating: Your version of Windows Subsystem for Linux is too old}''}
+Go to \href{https://github.com/microsoft/WSL/releases}{WSL GitHub Releases}, download the \texttt{.msi} installer from the latest stable release under the Assets section, if you are using amd64 architecture, download \texttt{wsl.\#.\#.\#.x64.msi}, if you are using arm64 architecture, download \texttt{wsl.\#.\#.\#.arm64.msi}. Run the installer and follow the setup instructions, and restart your machine when it's done.
 
 \newpage
 \section{About}
