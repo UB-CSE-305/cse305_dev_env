@@ -6,6 +6,7 @@
 \usepackage{parskip}
 \usepackage{xcolor}
 \usepackage{listings}
+\usepackage[most]{tcolorbox}
 \usepackage[os=mac]{menukeys}
 \usepackage[colorlinks=true, linkcolor=cyan, citecolor=cyan, urlcolor=blue]{hyperref}
 \lstset{
@@ -87,7 +88,7 @@ You may need to restart your machine to make sure the system is reading the upda
 
 If \texttt{which ocaml} prompt the path successfully, in your terminal run:
 \begin{lstlisting}
-$ opam install -y ocaml-lsp-server ocamlformat utop
+$ opam install -y ocaml-lsp-server ocamlformat ounit2 utop
 \end{lstlisting}
 
 \subsection{Setting up text editor}\label{TextEditorSetup}
@@ -195,6 +196,14 @@ To add your own Emacs configurations, you should edit the file \textbf{\texttt{/
 Proceed to Section~\ref{TestEnv} after setting up your preferred method.
 
 \subsubsection{Using VS Code with plugins}\label{VSCodeSetup}
+\begin{tcolorbox}[
+  colback=yellow!10,
+  colframe=red!70!black,
+  title=⚠ Read and understand the following notice regarding Academic integrity
+]
+The use of AI (including AI autocompletion and other interfaces) is not permitted in this course. Given the changes to VS Code which made AI autocompletion on by default recently, it is your responsibility to ensure that you have disabled any AI autocompletion features such as Copilot in VS Code while working on course assignments. If you want to complain about you are not sure whether your VS Code is using AI autocompletion, please use Emacs (in Section~\ref{EmacsSetup}) or \href{https://ocamlverse.net/content/editor_setup.html#vim-or-neovim}{Vim}, which will not have this problem, and we are happy to help you set it up.
+\end{tcolorbox}
+
 You need to install
 \href{https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers}{Dev Containers}
 in order to access the full functionality if you are using Visual Studio Code.
