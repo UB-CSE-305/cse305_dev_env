@@ -1,12 +1,12 @@
-name: Build LaTeX Manual
+name: Build Manual
 
 on:
   workflow_dispatch:
   push:
     branches:
-      - latex-manual
+      - manual
     paths:
-      - "manuals/OCaml_environment_setup.tex"
+      - "manuals/OCaml_environment_setup.typ"
 
 jobs:
   build:
@@ -14,17 +14,16 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
-          ref: latex-manual
+          ref: manual
 
-      - name: Set up TeX Live
-        uses: xu-cheng/latex-action@v4
-        with:
-          root_file: manuals/OCaml_environment_setup.tex
-          latexmk_use_lualatex: true
-        env:
-          TEXINPUTS: ".:manuals/images//:"
+      - name: Set up Typst
+        uses: typst-community/setup-typst@v4
+
+      - name: Compile Typst document
+        run: |
+          typst compile manuals/OCaml_environment_setup.typ OCaml_environment_setup.pdf
 
       - name: Upload PDF to latest release
         run: |
@@ -33,3 +32,4 @@ jobs:
           gh release upload "$LATEST_TAG" OCaml_environment_setup.pdf --clobber
         env:
           GH_TOKEN: ${{ secrets.CSE305_ACTION_PAT }}
+
