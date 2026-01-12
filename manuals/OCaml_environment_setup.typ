@@ -1,5 +1,3 @@
-#import "@preview/note-me:0.6.0": *
-
 #set page(numbering: "1")
 #set heading(numbering: "1.")
 
@@ -233,17 +231,6 @@ Proceed to @TestEnv after setting up your preferred method.
 
 === Using VS Code with plugins
 <VSCodeSetup>
-#caution[
-  #strong[Read and understand the following notice regarding Academic Integrity:]
-
-  The use of AI (including AI autocompletion and other interfaces) is not permitted in this course. 
-  Given the changes to VS Code which made AI autocompletion on by default recently, it is your responsibility 
-  to ensure that you have disabled any AI autocompletion features such as Copilot in VS Code while working on course assignments. 
-  If you want to complain about or are not sure whether your VS Code is using AI autocompletion, please use Emacs (in @EmacsSetup) 
-  or #link("https://ocamlverse.net/content/editor_setup.html#vim-or-neovim")[Vim], which will not have this problem, 
-  and we are happy to help you set it up.
-]
-
 You need to install
 #link("https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers")[Dev Containers]
 in order to access the full functionality if you are using Visual Studio
