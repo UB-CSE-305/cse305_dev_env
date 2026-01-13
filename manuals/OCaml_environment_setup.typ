@@ -2,11 +2,11 @@
 #set heading(numbering: "1.")
 
 #let CodeBloc(content) = block(
-  fill: luma(240), 
+  fill: luma(240),
   inset: 1em,
   radius: 0.5em,
   width: 100%,
-  content
+  content,
 )
 
 #show raw.where(block: true): CodeBloc
@@ -40,7 +40,7 @@ different sections. Linux and macOS users should read
 <MacLinuxInstall>
 == macOS: Install package manager Homebrew
 <macos-install-package-manager-homebrew>
-Homebrew is the most popular 'unofficial' package manager for macOS. If
+Homebrew is the most popular "unofficial" package manager for macOS. If
 you don't have it installed already, you should click on the
 #link("https://brew.sh/")[Homebrew website], copy the install script and
 run it in `Terminal.app` or any terminal emulator you have.
@@ -100,12 +100,12 @@ $ opam install -y ocaml-lsp-server ocamlformat utop ounit2
 == Setting up text editor
 <TextEditorSetup>
 You can use whatever editor you are comfortable with. However, we found
-VS Code to be the easiest editor to set up for use with OCaml.
+Visual Studio Code (VS Code) to be the easiest editor to set up for use with OCaml.
 #link("https://marketplace.visualstudio.com/items?itemName=ocamllabs.ocaml-platform")[OCaml Platform]
 is an extension we recommend for syntax highlighting and code auto
 completion. The extension can be found in the VS Code Extension Store.
 
-For macOS/Linux users, choose 'cse305\_4.14.2' when VS Code asks for
+For macOS/Linux users, choose `cse305_4.14.2` when VS Code asks for
 sandbox configuration. This should enable syntax highlighting and
 autocomplete. Proceed to @TestEnv to test your environment.
 
@@ -363,12 +363,12 @@ OPAM_LAST_ENV='/home/Vincent/.opam/.last-env/env-bf2bef-0'; export OPAM_LAST_ENV
 OPAM_SWITCH_PREFIX='/home/Vincent/.opam/default'; export OPAM_SWITCH_PREFIX;
 CAML_LD_LIBRARY_PATH='/home/Vincent/.opam/default/lib/stublibs:
                       /home/Vincent/.opam/default/lib/ocaml/stublibs:
-                      /home/Vincent/.opam/default/lib/ocaml'; 
+                      /home/Vincent/.opam/default/lib/ocaml';
                       export CAML_LD_LIBRARY_PATH;
 OCAML_TOPLEVEL_PATH='/home/Vincent/.opam/default/lib/toplevel';
                     export OCAML_TOPLEVEL_PATH;
 MANPATH=':/home/Vincent/.opam/default/man'; export MANPATH;
-PATH='/home/Vincent/.opam/default/bin:/usr/local/sbin:/usr/local/bin:/usr/bin'; 
+PATH='/home/Vincent/.opam/default/bin:/usr/local/sbin:/usr/local/bin:/usr/bin';
       export PATH;
 ```
 
@@ -415,6 +415,14 @@ Assets section, if you are using amd64 architecture, download
 `wsl.#.#.#.x64.msi`, if you are using arm64 architecture, download
 `wsl.#.#.#.arm64.msi`. Run the installer and follow the setup
 instructions, and restart your machine when it's done.
+
+=== VS Code cannot connect to the container, shows error "`ERROR: failed to solve: error getting credentials`/`gpg: public key decryption failed: No secret key`/`gpg: decryption failed: No secret key`"
+<vs-code-cannot-connect-to-the-container-shows-credentials-error>
+This error is caused by a broken GPG key in the Docker credentials. Try running the command
+```bash
+docker logout ghcr.io
+```
+in your terminal, and then reconnect to the container in VS Code.
 
 #pagebreak()
 = About
