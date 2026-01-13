@@ -11,7 +11,9 @@
         "vscode": {
             "extensions": [
                 "github.vscode-pull-request-github",
-                "ocamllabs.ocaml-platform"
+                "ocamllabs.ocaml-platform",
+                "-github.copilot-chat",
+                "-github.copilot"
             ]
         }
     }

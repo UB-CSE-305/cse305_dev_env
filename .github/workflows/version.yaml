@@ -14,7 +14,7 @@ jobs:
       version: ${{ steps.setver.outputs.version }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Generate new version number from GHCR
         id: setver

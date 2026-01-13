@@ -1,5 +1,4 @@
-ARG  BASE_IMAGE=ubuntu:24.04
-FROM ${BASE_IMAGE}
+FROM ubuntu:24.04
 
 LABEL org.opencontainers.image.authors="Vincent Chan <vichan39@buffalo.edu>"
 LABEL org.opencontainers.image.title="CSE305 Intro to Programming Languages Course Image"
@@ -9,7 +8,7 @@ LABEL org.opencontainers.image.source="https://github.com/UB-CSE-305/cse305_dev_
 ARG OCAML_VERSION=4.14.2
 ARG USER_NAME=cse305
 ARG USER_UID=1000
-ARG USER_GID=${USER_UID}
+ARG USER_GID=1000
 
 # Prerequisites & Utilities
 RUN apt-get update \
