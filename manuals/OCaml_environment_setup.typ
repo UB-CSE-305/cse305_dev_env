@@ -33,7 +33,7 @@ sections in this document is intentional.
 We will cover installation instructions for different platforms in
 different sections. Linux and macOS users should read
 @MacLinuxInstall, and Windows users should read
-@DockerSetup.
+@DockerSetup. Some troubleshooting tips are provided in @Troubleshoot.
 
 #pagebreak()
 = Installing OCaml on Linux/macOS
@@ -61,7 +61,7 @@ $ brew install opam
 Debian/Ubuntu:
 
 ```bash
-$ sudo apt update & sudo apt upgrade -y
+$ sudo apt update
 $ sudo apt install -y opam
 ```
 
@@ -70,16 +70,21 @@ terminal:
 
 ```bash
 $ opam init -a
-$ opam switch create cse305_4.14.2 ocaml-base-compiler.4.14.2 && opam switch cse305_4.14.2
+```
+When the installation is complete, open a new terminal and run:
+
+```bash
+$ opam switch create cse305_4.14.2 ocaml-base-compiler.4.14.2
+$ opam switch cse305_4.14.2
 ```
 
-When the installation is complete, restart your machine and open a new
-terminal. Verify that the installation was successful by running
+When the installation is complete, open a new terminal.
+Verify that the installation was successful by running
 `which ocaml` in your terminal, it should look like this:
 
 ```bash
 $ which ocaml
-<your_home_dir>/.opam/default/bin/ocaml
+<your_home_dir>/.opam/cse305_4.14.2/bin/ocaml
 ```
 
 If the terminal says `ocaml: command not found`, it means there's
@@ -112,19 +117,18 @@ autocomplete. Proceed to @TestEnv to test your environment.
 #pagebreak()
 = Using provided Docker images on Windows
 <DockerSetup>
-Setup for Windows is a little more complicated than other platforms, so
-we provide a Docker image with all necessary tools, Emacs development
-environment is also pre-installed. We recommend using Visual Studio Code
-(VS Code) or Emacs as the text editor for this course.
+Due to PowerShell security policies, setup for Windows is much more complicated than for other platforms,
+so we provide a Docker image with all the necessary tools pre-installed, including the Emacs development environment.
+For this course, we recommend using either Visual Studio Code (VS Code) or Emacs as the text editor.
 
 == Install Docker Desktop
 <InstallDocker>
-Docker will prompt you several times to log in to an account, you
+Docker Desktop will prompt you several times to log in to an account, you
 #strong[do not need a docker account] to use Docker Desktop, or any of
 its features for this course.
 
 Note that the Docker engine, and Docker Desktop #strong[are not the
-  same], and Docker Desktop is the only option we support. You should go
+ same], and Docker Desktop is the only option we support. You should go
 through
 #link("https://docs.docker.com/desktop/setup/install/windows-install/")[the documentation],
 read through it first, and then follow the instructions to install
@@ -133,6 +137,8 @@ Docker Desktop. You should also read through
 if you have concerns about permissions on Windows. In general, if you
 are unsure about a command you are running, you can find documentation
 using the man pages, i.e. `man docker-build` or `man docker-run`, etc.
+
+Once installation is complete, restart your machine and click on the Docker Desktop icon to start the Docker. If you have not installed Windows Subsystem for Linux (WSL) 2 before, follow the pop-up instructions to do so. Once you have started Docker Desktop, you can find it in the icon tray at the bottom right of your screen.
 
 == Build the container from `cse305_dev_env` repository
 <BuildContainer>
@@ -164,9 +170,7 @@ with the name you provided.
 To create a container from the image you just built:
 
 ```bash
-$ docker run --name 305container -it \
-  --mount type=bind,source="$(pwd)"/local_workspace,target=/home/cse305/workspace \
-  305image
+$ docker run --name 305container -it --mount type=bind,source="$(pwd)"/local_workspace,target=/home/cse305/workspace 305image
 ```
 
 In this command, we are naming the container `305container`. The flags
@@ -233,7 +237,7 @@ Proceed to @TestEnv after setting up your preferred method.
 <VSCodeSetup>
 You need to install
 #link("https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers")[Dev Containers]
-in order to access the full functionality if you are using Visual Studio
+and #link("https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-containers")[Container Tools] in order to access the full functionality if you are using Visual Studio
 Code.
 
 We use the Dev Container plugin to connect the `/home/cse305/workspace`
@@ -249,7 +253,7 @@ for you to develop your code.
 After installing the plugin, open the repository folder you just cloned
 in VS Code. Then, open the VS Code Command Palette
 (`Ctrl+P` on Linux/Windows or `Cmd+P` on macOS) and type
-"`> Dev Container: Reopen in Container`" to connect to your container.
+"`> Dev Containers: Reopen in Container`" to connect to your container.
 
 #figure(image("images/vscode_cmd_pat.png", width: 60.0%))
 
@@ -396,12 +400,12 @@ opam install -y ocaml-lsp-server ocamlformat
 ```
 
 == I tried to build the Docker image, but it failed with an error.
-<i-tried-to-build-the-docker-image-but-it-failed-with-an-error.>
+<i-tried-to-build-the-docker-image-but-it-failed-with-an-error>
 Make sure you read the error message carefully. It often provides clues
 about what went wrong. Please let us know if you are unable to resolve
 the issue.
 
-== Received an error "`Cannot connect to the Docker daemon at docker.sock. Is the docker daemon running?`"/"`Docker error the docker daemon is not running`"
+== Received an error "`Cannot connect to the Docker daemon at docker.sock. Is the docker daemon running?`"/"`Docker error: the docker daemon is not running`"
 <received-an-error-cannot-connect-to-the-docker-daemon-at-docker.sock.-is-the-docker-daemon-runningdocker-error-the-docker-daemon-is-not-running>
 Make sure Docker Desktop is running before you try to run any Docker
 commands.
@@ -416,7 +420,7 @@ Assets section, if you are using amd64 architecture, download
 `wsl.#.#.#.arm64.msi`. Run the installer and follow the setup
 instructions, and restart your machine when it's done.
 
-=== VS Code cannot connect to the container, shows error "`ERROR: failed to solve: error getting credentials`/`gpg: public key decryption failed: No secret key`/`gpg: decryption failed: No secret key`"
+== VS Code cannot connect to the container, shows error "`ERROR: failed to solve: error getting credentials`/`gpg: public key decryption failed: No secret key`/`gpg: decryption failed: No secret key`"
 <vs-code-cannot-connect-to-the-container-shows-credentials-error>
 This error is caused by a broken GPG key in the Docker credentials. Try running the command
 ```bash
