@@ -1,4 +1,13 @@
-#set page(numbering: "1")
+#set page(
+  header: [
+    CSE 305 #h(1fr) Introduction to Programming Languages #h(1fr) Spring 2026
+  ],
+  number-align: center,
+  numbering: "1",
+)
+#set text(
+  size: 9pt,
+)
 #set heading(numbering: "1.")
 
 #let CodeBloc(content) = block(
@@ -16,11 +25,7 @@
 #align(center)[
   #text(size: 1.8em, weight: "bold")[OCaml Environment Setup]
 
-  CSE 305 Introduction to Programming Languages
-
-  Spring 2026
-
-  Last update: #datetime.today().display("[month]-[day]-[year]")
+  #strong[Last update: #datetime.today().display("[month]-[day]-[year]")]
 ]
 
 = Introduction
@@ -99,7 +104,7 @@ make sure the system is reading the updated `.profile`.
 If `which ocaml` prompt the path successfully, in your terminal run:
 
 ```bash
-$ opam install -y ocaml-lsp-server ocamlformat utop ounit2
+$ opam install -y merlin ocaml-lsp-server ocamlformat utop ounit2
 ```
 
 == Setting up text editor
@@ -128,7 +133,7 @@ Docker Desktop will prompt you several times to log in to an account, you
 its features for this course.
 
 Note that the Docker engine, and Docker Desktop #strong[are not the
- same], and Docker Desktop is the only option we support. You should go
+  same], and Docker Desktop is the only option we support. You should go
 through
 #link("https://docs.docker.com/desktop/setup/install/windows-install/")[the documentation],
 read through it first, and then follow the instructions to install
