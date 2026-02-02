@@ -399,6 +399,11 @@ You need to install `ocaml-lsp-server` and `ocamlformat` by running:
 opam install -y ocaml-lsp-server ocamlformat
 ```
 
+Additionally, make sure you turn on the `Quick Suggestions` setting on in VS Code,
+and your VS Code theme supports syntax highlighting.
+
+#figure(image("images/vscode_quick_suggestions.png", width: 60.0%))
+
 == I tried to build the Docker image, but it failed with an error.
 <i-tried-to-build-the-docker-image-but-it-failed-with-an-error>
 Make sure you read the error message carefully. It often provides clues
