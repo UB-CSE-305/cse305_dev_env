@@ -14,7 +14,9 @@
 ;; neocaml
 ;; https://github.com/bbatsov/neocaml
 (use-package neocaml
-  :ensure t)
+  :ensure t
+  :config
+  (neocaml-install-grammars))
 
 ;; Ocaml-eglot provides some ootb features
 ;; https://github.com/tarides/ocaml-eglot/blob/main/README.md
