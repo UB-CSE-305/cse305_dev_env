@@ -11,27 +11,22 @@
   (setq flymake-diagnostic-format-alist
         '((t . (origin code message)))))
 
-;; Tuareg: an Emacs OCaml mode
-;; https://github.com/ocaml/tuareg
-(use-package tuareg
-  :ensure t
-  :mode (("\\.ocamlinit\\'" . tuareg-mode)))
+;; neocaml
+;; https://github.com/bbatsov/neocaml
+(use-package neocaml
+  :ensure t)
 
 ;; Ocaml-eglot provides some ootb features
 ;; https://github.com/tarides/ocaml-eglot/blob/main/README.md
 (use-package ocaml-eglot
   :ensure t
-  :after tuareg
+  :after neocaml
   :hook
-  (tuareg-mode . ocaml-eglot)
-  (ocaml-eglot . eglot-ensure)
+  (neocaml-mode . ocaml-eglot-mode)
+  (ocaml-eglot-mode . eglot-ensure)
+  (ocaml-eglot-mode . (lambda () (add-hook #'before-save-hook #'eglot-format nil t)))
   :config
   (setq ocaml-eglot-syntax-checker 'flymake))
-
-;; Enable ocamlformat format-on-save
-(add-hook 'tuareg-mode-hook (lambda ()
-  (define-key tuareg-mode-map (kbd "C-M-<tab>") #'ocamlformat)
-  (add-hook 'before-save-hook #'ocamlformat-before-save)))
 
 (use-package dune
   :ensure t)
@@ -39,9 +34,4 @@
 (use-package opam-switch-mode
   :ensure t
   :hook
-  (tuareg-mode . opam-switch-mode))
-
-(use-package ocp-indent
-  :ensure t
-  :config
-  (add-hook 'ocaml-eglot-hook 'ocp-setup-indent))
+  (neocaml-base-mode . opam-switch-mode))

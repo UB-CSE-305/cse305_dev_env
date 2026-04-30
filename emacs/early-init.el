@@ -39,6 +39,8 @@
 ;; collector is invoked to speed up initialization.  We want to
 ;; restore it for normal operation, however.
 
+(setq byte-compile-warnings '(not docstrings))
+
 (setq gc-cons-threshold (* 1024 1024 100))     ; 100 MB
 
 (defun reduce-gc-cons-threshold-after-startup ()

@@ -24,6 +24,7 @@
  '(backup-directory-alist '(("." . "~/.local/share/emacs/backups")))
  '(ac-use-fuzzy nil)
  '(line-move-visual t)
+ '(electric-indent-mode t)
  )
 
 ;; ANSI color in compilation buffer
@@ -39,18 +40,3 @@
 (global-set-key [f3] 'next-match)
 (defun prev-match () (interactive nil) (next-match -1))
 (global-set-key [(shift f3)] 'prev-match)
-(global-set-key [backtab] 'auto-complete)
-;; OCaml configuration
-;;  - better error and backtrace matching
-
-(defun set-ocaml-error-regexp ()
-  (set
-   'compilation-error-regexp-alist
-   (list '("[Ff]ile \\(\"\\(.*?\\)\", line \\(-?[0-9]+\\)\\(, characters \\(-?[0-9]+\\)-\\([0-9]+\\)\\)?\\)\\(:\n\\(\\(Warning .*?\\)\\|\\(Error\\)\\):\\)?"
-    2 3 (5 . 6) (9 . 11) 1 (8 compilation-message-face)))))
-
-(add-hook 'tuareg-mode-hook 'set-ocaml-error-regexp)
-(add-hook 'caml-mode-hook 'set-ocaml-error-regexp)
-;; ## added by OPAM user-setup for emacs / base keep this line
-(require 'opam-user-setup "~/.config/emacs/opam-user-setup.el")
-;; ## end of OPAM user-setup addition for emacs / base ## keep this line
